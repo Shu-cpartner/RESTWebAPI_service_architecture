@@ -30,10 +30,21 @@ servers:
   - url: "https://api.tastylog.com"
     description: "Production"
 
-
-tags: []
-
-paths: {}
+paths:
+  "/shops/{shopId}/reviews":
+    get:
+      summary: "Get specified shop reviews"
+      description: "(description): Get specified shop reviews"
+      tags: ["shops"]
+      deprecated: false
+      parameters:
+        - name: shopId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: "Success operation"
 
 security: []
 
