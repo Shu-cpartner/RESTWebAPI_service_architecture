@@ -62,7 +62,28 @@ paths:
                 comment: { type: string, example: "Delicious" }
       responses:
         "201":
-          description: "Success operation"
+          description: "Success response"
+          headers:
+            location:
+              description: "New URL of created review"
+              schema: { type: string, format: url }
+        "400":
+          description: "Client side error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code: { type: string }
+                  type: { type: string }
+                  message: { type: string }
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        field: { type: string }
+                        code: { type: string }
 
 security: []
 
