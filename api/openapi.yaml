@@ -25,7 +25,7 @@ servers:
     description: "Local development"
     variables:
       port:
-        enum: ["3000", "8080"]
+        enum: ["3000", "8080", "8002"]
         default: "3000"
   - url: "http://it1.tastylog.com"
     description: "Integration Test"
