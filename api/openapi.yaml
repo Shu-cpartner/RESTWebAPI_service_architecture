@@ -37,10 +37,20 @@ servers:
 paths:
   "/shops/{shopId}/reviews":
     get:
-      summary: "Get shop reviews"
+      summary: "Get shop review"
+      description: "Get specified shop's reviews"
       tags: ["reviews"]
       parameters:
-        - $ref: "#/componenst/parameters/ShopId"
+      - name: shopId
+        in: path
+        required: true
+        schema: { type: string }
+      - name: order
+        in: query
+        description: "Sort order"
+        schema:
+          type: string
+          enum: ["asc", "desc"]
       responses:
         "200":
           description: "Success operation"
