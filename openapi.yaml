@@ -16,6 +16,10 @@ info:
     url: "https://opensource.org/licenses/MIT"
   version: "1.0.0"
 
+tags:
+  - name: reviews
+    description: "Shop review operation"
+
 servers:
   - url: "http://localhost:{port}"
     description: "Local development"
@@ -32,8 +36,20 @@ servers:
 
 paths:
   "/shops/{shopId}/reviews":
+    get:
+      summary: "Get shop reviews"
+      tags: ["reviews"]
+      parameters:
+        - name: shopId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: "Success operation"
     post:
       summary: "Create review"
+      tags: ["reviews"]
       parameters:
         - name: shopId
           in: path
