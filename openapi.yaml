@@ -40,22 +40,21 @@ paths:
       summary: "Get shop reviews"
       tags: ["reviews"]
       parameters:
-        - name: shopId
-          in: path
-          required: true
-          schema: { type: string }
+        - $ref: "#/componenst/parameters/ShopId"
       responses:
         "200":
           description: "Success operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Review"
     post:
       summary: "Create review"
       tags: ["reviews"]
       parameters:
-        - name: shopId
-          in: path
-          required: true
-          schema: { type: string }
-          example: "abcdefg"
+        - $ref: "#/componenst/parameters/ShopId"
         - name: X-Api-Key
           in: header
           description: "Request user's identifier"
@@ -72,10 +71,7 @@ paths:
         content:
           application/json:
             schema: 
-              type: object
-              properties:
-                score: { type: integer, example: 3}
-                comment: { type: string, example: "Delicious" }
+              $ref: "#/components/schemas/Review"
       responses:
         "201":
           description: "Success response"
@@ -84,27 +80,30 @@ paths:
               description: "New URL of created review"
               schema: { type: string, format: url }
         "400":
-          description: "Client side error"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code: { type: string }
-                  type: { type: string }
-                  message: { type: string }
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        field: { type: string }
-                        code: { type: string }
+          $ref: "#/components/responses/400-BadRequest"
 
 security: []
 
 components:
   schemas:
+    Review:
+      type: object
+      properties:
+        score: { type: integer }
+        comment: { type: string }
+    ClientError:
+      type: object
+      properties:
+        code: { type: string }
+        type: { type: string }
+        message: { type: string }
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field: { type: string }
+              code: { type: string }
     Samplelnt:
       type: integer
       minimum: 0
@@ -135,3 +134,17 @@ components:
                 enum: [1, 2, 3, 4, 5]
               comment:
                 type: string
+  parameters:
+    ShopId:
+      name: shopId
+      in: path
+      description: "Shop identifier"
+      required: true
+      schema: { type: string }
+  responses:
+    400-BadRequest:
+      description: "Client side error"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ClientError"
